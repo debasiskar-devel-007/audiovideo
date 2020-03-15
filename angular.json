@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "audio-video-recorder"
+  "defaultProject": "audio-video-recorder",
+  "cli": {
+    "analytics": "340b8563-8c18-44fd-91a0-6c6145fe865d"
+  }
 }

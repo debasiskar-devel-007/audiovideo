@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import  {AppComponent} from '../app.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import {  FileUploader } from 'ng2-file-upload';
-import * as RecordRTC from 'recordrtc';
 // import { HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import {HttpServiceService} from '../http-service.service';
 var $: any;
@@ -65,8 +64,6 @@ export class AudioRecorderComponent implements OnInit {
     }
   }
   onClick() {
-    console.log('+++++++',this.blobUrl);
-    return;
     const formData = new FormData();
     formData.append('file', this.blobUrl1);
     formData.append('bucketname','testimonial-assets');

@@ -61,6 +61,8 @@ export class AudioRecorderComponent implements OnInit {
     }
   }
   onClick() {
+    console.log('+++++++',this.blobUrl);
+    return;
     const formData = new FormData();
     formData.append('file', this.blobUrl);
     this.fileUploadProgress = '0%';

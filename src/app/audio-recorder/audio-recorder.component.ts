@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import  {AppComponent} from '../app.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import {  FileUploader } from 'ng2-file-upload';
+import * as RecordRTC from 'recordrtc';
 // import { HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import {HttpServiceService} from '../http-service.service';
+var $: any;
 // import { MatSnackBar } from '@angular/material/snack-bar';
 const uploadAPI = 'http://127.0.0.1:8000/api/upload';
 @Component({
@@ -12,10 +14,10 @@ const uploadAPI = 'http://127.0.0.1:8000/api/upload';
   styleUrls: ['./audio-recorder.component.css']
 })
 export class AudioRecorderComponent implements OnInit {
-
   isRecording = false;
   recordedTime;
   public blobUrl:any;
+  public blobUrl1:any;
   public fileUploadProgress: string = null;
   public configData: any = {
     baseUrl: "https://fileupload.influxhostserver.com/",
@@ -40,6 +42,8 @@ export class AudioRecorderComponent implements OnInit {
 
     this.appcomponent.getRecordedBlob().subscribe((data) => {
       this.blobUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data.blob));
+      this.blobUrl1 = data.blob;
+      console.log('====================',this.blobUrl1);  
     });
    }
 
@@ -64,10 +68,11 @@ export class AudioRecorderComponent implements OnInit {
     console.log('+++++++',this.blobUrl);
     return;
     const formData = new FormData();
-    formData.append('file', this.blobUrl);
+    formData.append('file', this.blobUrl1);
+    formData.append('bucketname','testimonial-assets');
     this.fileUploadProgress = '0%';
  
-    this.http.httpViaPost('upload', formData)
+    this.http.httpViaPost('uploads', formData)
     .subscribe(events => {
       console.log(events)   
     }) 

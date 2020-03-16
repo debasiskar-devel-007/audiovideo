@@ -12,7 +12,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 export class HttpServiceService {
   
   public jwtToken: any = "";
-  public baseUrl:any="http://127.0.0.1:8000/";
+  public baseUrl:any="https://fileupload.influxhostserver.com/";
   constructor(private http: HttpClient) {
   }
 

@@ -43,6 +43,7 @@ export class VideoRecorderComponent implements OnInit {
     const mediaStream = new MediaStream();
     this.stream = stream;
     this.recordRTC = RecordRTC(stream, options);
+    console.log('++++++++++',this.recordRTC);
     this.recordRTC.startRecording();
     let video: HTMLVideoElement = this.video.nativeElement;
     video.srcObject = mediaStream;
@@ -76,11 +77,11 @@ export class VideoRecorderComponent implements OnInit {
     video.src = audioVideoWebMURL;
     this.toggleControls();
     var recordedBlob = recordRTC.getBlob();
-    console.log('++++++++++++',recordedBlob);
+    // console.log('++++++++++++',recordedBlob);
     recordRTC.getDataURL(function (dataURL) { });
   }
 
-  startRecording() {
+  recordingData() {
     let video: HTMLVideoElement = this.video.nativeElement;
     var mediaConstraints = {
       audio: true,
@@ -93,7 +94,28 @@ export class VideoRecorderComponent implements OnInit {
     navigator.mediaDevices
       .getUserMedia(mediaConstraints)
       // .then(this.successCallback.bind(this), this.errorCallback.bind(this));
-      .then(this.successCallback.bind(this),stream => video.srcObject = stream)
+      .then(this.successCallback.bind(this),this.errorCallback.bind(this))
+
+  }
+
+
+  startRecording() {
+    let video: HTMLVideoElement = this.video.nativeElement;
+    var mediaConstraints = {
+      audio: true,
+      video: {
+        width: 1280,
+        height: 720
+    }
+    };
+    // let stream = this.stream;
+    this.recordingData();
+     navigator.mediaDevices.getUserMedia(mediaConstraints).then(function success(stream) {
+      video.srcObject = stream;
+      stream.getTracks().forEach(function(track) {
+          console.log(track.getSettings());
+      })
+  });
 
   }
 
